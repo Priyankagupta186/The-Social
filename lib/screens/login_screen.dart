@@ -58,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
           )),
     );
 
+    // Login Button Widget
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_social/constants/ConstantColors.dart';
 import 'package:the_social/screens/login_screen.dart';
-import 'package:the_social/screens/splash/splashScreen.dart';
+import 'package:the_social/screens/splashScreen.dart';
 
 void main() {
   runApp(const MyApp());

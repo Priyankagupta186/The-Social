@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:the_social/screens/login_screen.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key? key}) : super(key: key);
@@ -12,11 +15,13 @@ class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
 
   // editing controller
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
-  final TextEditingController nameController = new TextEditingController();
-
-  final TextEditingController confPasswordController =
+  final TextEditingController emailControllerSignup =
+      new TextEditingController();
+  final TextEditingController passwordControllerSignup =
+      new TextEditingController();
+  final TextEditingController nameControllerSignup =
+      new TextEditingController();
+  final TextEditingController confPasswordControllerSignup =
       new TextEditingController();
 
   @override
@@ -24,11 +29,11 @@ class _SignUpState extends State<SignUp> {
     // Name field
     final nameField = TextFormField(
       autofocus: false,
-      controller: nameController,
+      controller: nameControllerSignup,
       keyboardType: TextInputType.name,
       // validator: () {},
       onSaved: (newValue) {
-        nameController.text = newValue!;
+        nameControllerSignup.text = newValue!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -43,11 +48,11 @@ class _SignUpState extends State<SignUp> {
     // email field
     final emailField = TextFormField(
       autofocus: false,
-      controller: emailController,
+      controller: emailControllerSignup,
       keyboardType: TextInputType.emailAddress,
       // validator: () {},
       onSaved: (value) {
-        emailController.text = value!;
+        emailControllerSignup.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -62,11 +67,11 @@ class _SignUpState extends State<SignUp> {
     // password field
     final passwordField = TextFormField(
       autofocus: false,
-      controller: passwordController,
+      controller: passwordControllerSignup,
       obscureText: true,
       // validator: () {},
       onSaved: (value) {
-        passwordController.text = value!;
+        passwordControllerSignup.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -81,11 +86,11 @@ class _SignUpState extends State<SignUp> {
     // password field
     final confpasswordField = TextFormField(
       autofocus: false,
-      controller: confPasswordController,
+      controller: confPasswordControllerSignup,
       obscureText: true,
       // validator: () {},
       onSaved: (value) {
-        passwordController.text = value!;
+        passwordControllerSignup.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -97,8 +102,7 @@ class _SignUpState extends State<SignUp> {
           )),
     );
 
-    // signup Field
-
+    // signup Button Field
     final signupButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -120,6 +124,17 @@ class _SignUpState extends State<SignUp> {
     );
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.blue),
+          onPressed: () {
+            // go back to previous page
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
@@ -173,7 +188,10 @@ class _SignUpState extends State<SignUp> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            print("tapped");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()));
                           },
                           child: Text(
                             "Login",
