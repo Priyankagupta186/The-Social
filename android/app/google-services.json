@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "630680795544",
+    "project_id": "the-social-5ba4c",
+    "storage_bucket": "the-social-5ba4c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630680795544:android:32500dc304afa9d9f693ed",
+        "android_client_info": {
+          "package_name": "com.jayant.the_social"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630680795544-mirqgus95qgqosi1esfm2l1crf6ub7i8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdzjGmwXw3VOVRsLK0lo_VcpN3ODM4ZY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630680795544-mirqgus95qgqosi1esfm2l1crf6ub7i8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
