@@ -111,8 +111,8 @@ class _SignUpState extends State<SignUp> {
         padding: EdgeInsets.fromLTRB(20, 12, 20, 12),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SignUp()));
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => SignUp()));
         },
         child: Text(
           "Signup",

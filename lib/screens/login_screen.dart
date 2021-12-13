@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:the_social/screens/home_screeen.dart';
 import 'package:the_social/screens/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -66,7 +67,9 @@ class _LoginScreenState extends State<LoginScreen> {
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 12, 20, 12),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        },
         child: Text(
           "Login",
           textAlign: TextAlign.center,
