@@ -1,6 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:the_social/screens/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -10,6 +15,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _fAuth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +51,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ActionChip(
               label: Text("Logout"),
-              onPressed: () {},
+              onPressed: () {
+                _fAuth
+                    .signOut()
+                    .then((value) => {
+                          Fluttertoast.showToast(msg: "Logging out"),
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen())),
+                        })
+                    .catchError((e) {
+                  Fluttertoast.showToast(msg: e.toString());
+                });
+              },
               backgroundColor: Colors.blue,
             )
           ],
