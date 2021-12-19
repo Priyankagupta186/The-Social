@@ -1,6 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:the_social/model/user_model_reg.dart';
+import 'package:the_social/screens/home_screeen.dart';
 import 'package:the_social/screens/login_screen.dart';
 
 class SignUp extends StatefulWidget {
@@ -13,6 +19,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   // form key
   final _formKey = GlobalKey<FormState>();
+  final _auth = FirebaseAuth.instance;
 
   // editing controller
   final TextEditingController emailControllerSignup =
@@ -31,7 +38,16 @@ class _SignUpState extends State<SignUp> {
       autofocus: false,
       controller: nameControllerSignup,
       keyboardType: TextInputType.name,
-      // validator: () {},
+      validator: (value) {
+        RegExp regExp = new RegExp(r'^.{3,}$');
+        if (value!.isEmpty) {
+          return "Name can't be Empty";
+        }
+        if (!regExp.hasMatch(value)) {
+          return "Name should be minimum 3 character";
+        }
+        return null;
+      },
       onSaved: (newValue) {
         nameControllerSignup.text = newValue!;
       },
@@ -50,7 +66,16 @@ class _SignUpState extends State<SignUp> {
       autofocus: false,
       controller: emailControllerSignup,
       keyboardType: TextInputType.emailAddress,
-      // validator: () {},
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Please Enter Your Email";
+        }
+        // regex for email validation
+        if (!RegExp("^[a-zA-z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+          return "Please enter a valid email";
+        }
+        return null;
+      },
       onSaved: (value) {
         emailControllerSignup.text = value!;
       },
@@ -69,7 +94,15 @@ class _SignUpState extends State<SignUp> {
       autofocus: false,
       controller: passwordControllerSignup,
       obscureText: true,
-      // validator: () {},
+      validator: (value) {
+        RegExp regExp = new RegExp(r'^.{6,}$');
+        if (value!.isEmpty) {
+          return "Password can't be Empty";
+        }
+        if (!regExp.hasMatch(value)) {
+          return "Password should be minimum 5 character";
+        }
+      },
       onSaved: (value) {
         passwordControllerSignup.text = value!;
       },
@@ -83,12 +116,23 @@ class _SignUpState extends State<SignUp> {
           )),
     );
 
-    // password field
+    // confirm password field
     final confpasswordField = TextFormField(
       autofocus: false,
       controller: confPasswordControllerSignup,
       obscureText: true,
-      // validator: () {},
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Confirm con't be Empty";
+        }
+        // if (value.length < 6) {
+        //   return "Confirm password should be minimum 6 character";
+        // }
+        if (passwordControllerSignup.text != value) {
+          return "Confirm Password don't match";
+        }
+        return null;
+      },
       onSaved: (value) {
         passwordControllerSignup.text = value!;
       },
@@ -113,6 +157,7 @@ class _SignUpState extends State<SignUp> {
         onPressed: () {
           // Navigator.push(
           //     context, MaterialPageRoute(builder: (context) => SignUp()));
+          signUp(emailControllerSignup.text, passwordControllerSignup.text);
         },
         child: Text(
           "Signup",
@@ -211,5 +256,40 @@ class _SignUpState extends State<SignUp> {
         )),
       ),
     );
+  }
+
+  void signUp(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => {sendUserDataToFireStrore()})
+          .catchError((e) {
+        Fluttertoast.showToast(msg: e!.message);
+      });
+    }
+  }
+
+  sendUserDataToFireStrore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    UserModelReg userModeReg = UserModelReg();
+
+    userModeReg.email = user!.email;
+    userModeReg.uid = user.uid;
+    userModeReg.name = nameControllerSignup.text;
+    userModeReg.password = passwordControllerSignup.text;
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .set(userModeReg.toMap());
+
+    Fluttertoast.showToast(msg: "Account created");
+
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false);
   }
 }

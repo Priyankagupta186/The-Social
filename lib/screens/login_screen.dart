@@ -24,6 +24,29 @@ class _LoginScreenState extends State<LoginScreen> {
   // firebase
   final _auth = FirebaseAuth.instance;
 
+
+  //  @override
+  // void initState() {
+  //   super.initState();
+
+  //   if(FirebaseAuth.instance.currentUser == null){
+
+  //     Navigator.of(context).pushReplacement(MaterialPageRoute(
+  //       builder: (context) => LoginScreen()
+  //     ));
+  //   }
+
+  //   // Redirect to home screent if Current user is not null.....................
+  //   else if(FirebaseAuth.instance.currentUser != null){
+
+  //     Navigator.of(context).pushReplacement(MaterialPageRoute(
+  //       builder: (context) => HomeScreen()
+  //     ));
+  //   }
+
+  // }
+
+
   @override
   Widget build(BuildContext context) {
     // email field
@@ -62,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
       validator: (value) {
         RegExp regExp = new RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
-          return "Please is required";
+          return "Password can't be Empty";
         }
         if (!regExp.hasMatch(value)) {
           return "Password should be minimum 5 character";
@@ -181,7 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
 // loginFunction
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
-      await _auth
+        await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
                 Fluttertoast.showToast(msg: "Login Successfully"),
