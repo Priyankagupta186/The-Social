@@ -196,7 +196,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(
                       height: 180,
                       child: Image.asset(
-                        'assets/images/wel.jpg',
+                        'assets/images/login_image1.png',
                         fit: BoxFit.contain,
                       ),
                     ),
