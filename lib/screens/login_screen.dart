@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:the_social/screens/filter_screen.dart';
 import 'package:the_social/screens/home_screeen.dart';
 import 'package:the_social/screens/signup_screen.dart';
 
@@ -141,14 +142,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      height: 180,
+                      height: 260,
                       child: Image.asset(
-                        'assets/images/logo.jpg',
+                        'assets/images/hey.png',
                         fit: BoxFit.contain,
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     emailField,
                     SizedBox(
@@ -156,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     passwordField,
                     SizedBox(
-                      height: 20,
+                      height: 40,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 70, right: 70),
@@ -209,7 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
           .then((uid) => {
                 Fluttertoast.showToast(msg: "Login Successfully"),
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomeScreen())),
+                    MaterialPageRoute(builder: (context) => FilterChipDisplay())),
               })
           .catchError((e) {
         Fluttertoast.showToast(msg: e.toString());
